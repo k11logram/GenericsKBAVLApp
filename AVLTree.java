@@ -63,10 +63,9 @@ public class AVLTree extends BinaryTree
    public AVLNode insert ( Fact d, AVLNode node )
    {
       if (node == null){
-         insCount++;
          return new AVLNode (d, null, null);}
-      else if (d.getTerm().compareTo (node.data.getTerm()) <= 0){
          insCount++;
+      if (d.getTerm().compareTo (node.data.getTerm()) <= 0){
          node.left = insert (d, node.left);}
       else{
          node.right = insert (d, node.right);}
@@ -117,29 +116,28 @@ public class AVLTree extends BinaryTree
    public AVLNode find ( String d )
    {
       if (root == null){
-         optCount++;
          return null;}
       else{
+      
          return find (d, root);}
    }
    public AVLNode find ( String d, AVLNode node )
    {
-      if (d.compareTo (node.data.getTerm().trim()) == 0){
-         optCount++; 
+       optCount++; 
+      if (d.compareTo (node.data.getTerm().trim()) == 0){   
          return node;}
-      else if (d.compareTo (node.data.getTerm().trim()) < 0){
-         optCount++;
+     else if (d.compareTo (node.data.getTerm().trim()) < 0 ){
+      
          if (node.left == null){
-          optCount++;
           return  null;
           }
          return find (d, node.left);        
         }
       else
          if(node.right == null){
-          optCount++;
           return null;
-          } 
+          }
+        optCount++; 
        return find (d, node.right);
    }
    
