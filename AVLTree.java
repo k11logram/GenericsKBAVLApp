@@ -1,5 +1,6 @@
 public class AVLTree extends BinaryTree
 {
+ private int insCount,optCount;
    public int height ( AVLNode node )
    {
       if (node != null)
@@ -61,12 +62,14 @@ public class AVLTree extends BinaryTree
    }
    public AVLNode insert ( Fact d, AVLNode node )
    {
-      if (node == null)
-         return new AVLNode (d, null, null);
-      if (d.getTerm().compareTo (node.data.getTerm()) <= 0)
-         node.left = insert (d, node.left);
-      else
-         node.right = insert (d, node.right);
+      if (node == null){
+         insCount++;
+         return new AVLNode (d, null, null);}
+      else if (d.getTerm().compareTo (node.data.getTerm()) <= 0){
+         insCount++;
+         node.left = insert (d, node.left);}
+      else{
+         node.right = insert (d, node.right);}
       return balance (node);
    }
    
@@ -113,23 +116,28 @@ public class AVLTree extends BinaryTree
 
    public AVLNode find ( String d )
    {
-      if (root == null)
-         return null;
-      else
-         return find (d, root);
+      if (root == null){
+         optCount++;
+         return null;}
+      else{
+         return find (d, root);}
    }
    public AVLNode find ( String d, AVLNode node )
    {
-      if (d.compareTo (node.data.getTerm().trim()) == 0) 
-         return node;
+      if (d.compareTo (node.data.getTerm().trim()) == 0){
+         optCount++; 
+         return node;}
       else if (d.compareTo (node.data.getTerm().trim()) < 0){
+         optCount++;
          if (node.left == null){
+          optCount++;
           return  null;
           }
          return find (d, node.left);        
         }
       else
          if(node.right == null){
+          optCount++;
           return null;
           } 
        return find (d, node.right);
@@ -150,6 +158,10 @@ public class AVLTree extends BinaryTree
          treeOrder (node.right, level+1);
       }
    }
+   public int getInsertCount(){
+    return insCount;}
+   public int getSearchCount(){
+    return optCount;}
 }
 
 
