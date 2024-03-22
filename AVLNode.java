@@ -13,7 +13,7 @@ public class AVLNode{
   AVLNode left;
   AVLNode right;
   
-  //Set the values for the left and right node and the height
+  //Set the values for the left and right node and the height of the node
   public AVLNode(Fact generic_truth, AVLNode left, AVLNode right){
      this.data=generic_truth;
      this.left=left;
@@ -33,11 +33,11 @@ public class AVLNode{
    this.right=null;
    height=0;
     }
-
+  //Returns the left node
   public AVLNode getLeft(){
     return this.left;
     }
-    
+   //returns the right node. 
   public AVLNode getRight(){
     return this.right;
     }

@@ -16,26 +16,27 @@ public class Fact{
     this.statement=statement;
     this.confidence_score=confidence_score;
     }
-    
+  //return term  
   public String getTerm(){
     return this.term;
     }
+  //return statement
   public String getStatement(){
     return this.statement;
     }
-    
+  //return confidence score 
   public double getConfidence(){
     return this.confidence_score;
     }
-    
+  // set the term 
   public void setTerm(String term){
     this.term=term;
     }
-    
+   //set the statement 
   public void setStatement(String statement){
     this.statement=statement;
     }
-    
+   //set the confidence score 
   public void setConfidence(double confidence){
     this.confidence_score=confidence;
     }

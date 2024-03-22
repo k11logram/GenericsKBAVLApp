@@ -1,23 +1,41 @@
+//Hussein Suleman
+//Modified by Kagiso Dube
+//15 March 2024
+//DBXKAG003
+
+/* this class stores the nodes in the avl tree
+ * it updates the height of the node every time they are store
+ * it check the balance factor and if the is an imbalance it does rotations to make the tree a balanced tree
+ * Counts the number of comparisons the insert and search method do
+ */
+
+
+
 public class AVLTree extends BinaryTree
 {
+   //Count number of comparisons done by insert and search method.
  private int insCount,optCount;
+    //Returns the height of a node
    public int height ( AVLNode node )
    {
       if (node != null)
          return node.height;
       return -1;
    }
-   
+
+   //Check if the node is balanced or not
    public int balanceFactor ( AVLNode node )
    {
       return height (node.right) - height (node.left);
    }
-   
+
+   //Fix the height of a node
    public void fixHeight ( AVLNode node )
    {
       node.height = Math.max (height (node.left), height (node.right)) + 1;
    }
-   
+
+   // If the balance factor of a node is 2 we do right rotation
    public AVLNode rotateRight ( AVLNode p )
    {
       AVLNode q = p.left;
@@ -27,7 +45,7 @@ public class AVLTree extends BinaryTree
       fixHeight (q);
       return q;
    }
-
+   //if balance factor of a node is -2 we do left rotation
    public AVLNode rotateLeft ( AVLNode q )
    {
       AVLNode p = q.right;
@@ -38,6 +56,7 @@ public class AVLTree extends BinaryTree
       return p;
    }
    
+   //Checks if our tree is balance and if not it does the proper rotations to fix the issue
    public AVLNode balance ( AVLNode p )
    {
       fixHeight (p);
@@ -55,11 +74,13 @@ public class AVLTree extends BinaryTree
       }
       return p;
    }
-
+   //This method inserts the node as our root node
    public void insert ( Fact d )
    {
       root = insert (d, root);
    }
+
+   //This method inserts the node into the AVL tree
    public AVLNode insert ( Fact d, AVLNode node )
    {
       if (node == null){
@@ -72,30 +93,6 @@ public class AVLTree extends BinaryTree
       return balance (node);
    }
    
-   public void delete ( AVLNode d )
-   {
-      root = delete (d, root);
-   }   
-   public AVLNode delete ( AVLNode d, AVLNode node )
-   {
-      if (node == null) return null;
-      if (d.data.getTerm().compareTo (node.data.getTerm()) < 0)
-         node.left = delete (d, node.left);
-      else if (d.data.getTerm().compareTo (node.data.getTerm()) > 0)
-         node.right = delete (d, node.right);
-      else
-      {
-         AVLNode q = node.left;
-         AVLNode r = node.right;
-         if (r == null)
-            return q;
-         AVLNode min = findMin (r);
-         min.right = removeMin (r);
-         min.left = q;
-         return balance (min);
-      }
-      return balance (node);
-   }
    
    public AVLNode findMin ( AVLNode node )
    {
@@ -112,7 +109,8 @@ public class AVLTree extends BinaryTree
       node.left = removeMin (node.left);
       return balance (node);
    }
-
+   
+   //This method checks if the root node is null when searching for a term
    public AVLNode find ( String d )
    {
       if (root == null){
@@ -121,6 +119,8 @@ public class AVLTree extends BinaryTree
       
          return find (d, root);}
    }
+
+   //This method searches for a term in the AVL treee
    public AVLNode find ( String d, AVLNode node )
    {
        optCount++; 
@@ -140,24 +140,11 @@ public class AVLTree extends BinaryTree
         optCount++; 
        return find (d, node.right);
    }
-   
-   public void treeOrder ()
-   {
-      treeOrder (root, 0);
-   }
-   public void treeOrder ( AVLNode node, int level )
-   {
-      if (node != null)
-      {
-         for ( int i=0; i<level; i++ )
-            System.out.print (" ");
-         System.out.println (node.data);
-         treeOrder (node.left, level+1);
-         treeOrder (node.right, level+1);
-      }
-   }
+   //This method returns the number of comparisons done by the insert method
    public int getInsertCount(){
     return insCount;}
+
+   //This method returns number of comparisons done by the find method
    public int getSearchCount(){
     return optCount;}
 }

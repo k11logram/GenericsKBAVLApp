@@ -14,35 +14,43 @@ import java.awt.Color;
 import javax.swing.JOptionPane;
 
 
-
+/*Asks the user for size of the set the avl tree is suppose to store
+ *facts sored randomly each time
+ *after storing that size it goes through the query file and checks if any of the terms can be found in the tree
+ *repeats this process for 10 times
+ * returns the number of comparisons done for each of does times
+ */
 
 public class Experiment{
  
   public static void main(String args[]){
+    //GUI interface
     JFrame frame = new JFrame("Experimental Data");
-    
     frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.getContentPane().setBackground(Color.BLACK);
     frame.setVisible(true);
+    //accept size of the set
     String input = JOptionPane.showInputDialog(frame,"Please enter the number of generic truths you wish to store in the tree, must be from 1 to 50000");
     
+    //counter to see how many times have we executed tthis code(must be equal to 10)
     int x=0;
+    //Store number of comparisons done each time
     List<Integer> insertCounter = new ArrayList<>();
     List<Integer> searchCounter = new ArrayList<>();
       do{
       
-        //Variable declaration
-        
+      //Variable declaration
         int j=0;
+        //counts number of queries stored in array
         int i=0;
         AVLTree node= new AVLTree();
         String[] queries= new String[50000];
         List<Fact> nodeStorage = new ArrayList<>();
        
-
+        //convert input into integer
         int Numterms=Integer.parseInt(input);
-    //Store the query terms in a array
+       //Store the query terms in a array
         try{
         BufferedReader read = new BufferedReader(new FileReader("GenericsKB-queries.txt"));
         String fileLine="";
@@ -61,7 +69,7 @@ public class Experiment{
     
 
 
-    // Storing the generic truths in a AVL tree 
+    // Storing the generic truths in a list so we can shuffle it 
     try{
     BufferedReader readfile = new BufferedReader(new FileReader("GenericsKB.txt"));
     String file ="";
@@ -84,7 +92,7 @@ public class Experiment{
           System.out.println("Enter proper file name");
    
     }
-
+   //Store facts in the list in the avl tree
    while(j<Numterms){
     node.insert(nodeStorage.get(j));
     j++;
@@ -93,20 +101,20 @@ public class Experiment{
    for(int y=0;y<i;y++){   
     AVLNode newNode=node.find(queries[y]);
     if(newNode != null){
-               //  System.out.println(queries[y]+": "+newNode.data.getStatement().trim()+" ("+newNode.data.getConfidence()+")");
+//  System.out.println(queries[y]+": "+newNode.data.getStatement().trim()+" ("+newNode.data.getConfidence()+")");
         }
     else{}
    }
+   //number of comparisons done for this round are stored here
     insertCounter.add(node.getInsertCount());
     searchCounter.add(node.getSearchCount());
-
-  
    x++;
    }
    
   while((x<10));
- JOptionPane.showMessageDialog(frame,"insertMethod Comparisons"+insertCounter); 
- JOptionPane.showMessageDialog(frame,"SerachMethodComparisons"+searchCounter);
+//print out the comparisons 
+ JOptionPane.showMessageDialog(frame,"insert Method Comparisons\n"+insertCounter); 
+ JOptionPane.showMessageDialog(frame,"Search Method Comparisons\n"+searchCounter);
  frame.dispose();
 }
 }
